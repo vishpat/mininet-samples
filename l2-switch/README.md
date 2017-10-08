@@ -16,5 +16,11 @@ sh ovs-ofctl add-flow s1 ip,actions=NORMAL
 
 The following openflow rules can be added (at the mininet prompt) to get better version of the same switch
 <pre>
+sh ovs-ofctl add-flow s1 "arp,nw_dst=10.0.0.1,actions=output:1"
+sh ovs-ofctl add-flow s1 "arp,nw_dst=10.0.0.2,actions=output:2"
+sh ovs-ofctl add-flow s1 "arp,nw_dst=10.0.0.3,actions=output:3"
 
+sh ovs-ofctl add-flow s1 "ip,nw_dst=10.0.0.1,actions=output:1"
+sh ovs-ofctl add-flow s1 "ip,nw_dst=10.0.0.2,actions=output:2"
+sh ovs-ofctl add-flow s1 "ip,nw_dst=10.0.0.3,actions=output:3"                                                             
 </pre>
