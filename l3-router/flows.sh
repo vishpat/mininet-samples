@@ -20,18 +20,25 @@ L2_FORWARD=30
 
 ovs-ofctl del-flows s1
 
+# Avoid ARP flooding
+ovs-ofctl add-flow s1 "table=0,priority=100,arp,nw_dst=10.10.10.3,actions=output:1"
+ovs-ofctl add-flow s1 "table=0,priority=100,arp,nw_dst=10.10.10.4,actions=output:2"
+ovs-ofctl add-flow s1 "table=0,priority=100,arp,nw_dst=10.10.10.13,actions=output:3"
+ovs-ofctl add-flow s1 "table=0,priority=100,arp,nw_dst=10.10.10.14,actions=output:4"
+
+# ARP handing for gateway IP addresses
 ovs-ofctl add-flow s1 "table=0,priority=1000,arp,nw_dst=$GW1_IP,actions=resubmit(,$GW_ARP)"
 ovs-ofctl add-flow s1 "table=0,priority=1000,arp,nw_dst=$GW2_IP,actions=resubmit(,$GW_ARP)"
-ovs-ofctl add-flow s1 "table=0,priority=500,arp,actions=FLOOD"
 
+# L3 forwarding across subnets
 ovs-ofctl add-flow s1 "table=0,priority=1000,ip,nw_src=10.10.10.1/24,dl_dst=$GW1_MAC,actions=resubmit(,$L3_SRC_MAC_REWRITE)"
 ovs-ofctl add-flow s1 "table=0,priority=1000,ip,nw_src=10.10.20.1/24,dl_dst=$GW2_MAC,actions=resubmit(,$L3_SRC_MAC_REWRITE)"
 
+# L3 forwarding within same subnet
 ovs-ofctl add-flow s1 "table=0,priority=500,ip,nw_src=10.10.10.1/24,nw_dst=10.10.10.3,actions=output:1"
 ovs-ofctl add-flow s1 "table=0,priority=500,ip,nw_src=10.10.10.1/24,nw_dst=10.10.10.4,actions=output:2"
 ovs-ofctl add-flow s1 "table=0,priority=500,ip,nw_src=10.10.20.1/24,nw_dst=10.10.20.13,actions=output:3"
 ovs-ofctl add-flow s1 "table=0,priority=500,ip,nw_src=10.10.20.1/24,nw_dst=10.10.20.14,actions=output:4"
-
 
 # ARP flows for gateway ips 
 ovs-ofctl add-flow s1 "table=$GW_ARP,arp,nw_dst=$GW1_IP,actions=load:0x2->NXM_OF_ARP_OP[], move:NXM_OF_ETH_SRC[]->NXM_OF_ETH_DST[], mod_dl_src:$GW1_MAC, move:NXM_NX_ARP_SHA[]->NXM_NX_ARP_THA[], move:NXM_OF_ARP_SPA[]->NXM_OF_ARP_TPA[], load:$GW1_HEX->NXM_NX_ARP_SHA[], load:$GW1_IP_HEX->NXM_OF_ARP_SPA[], in_port"
