@@ -1,5 +1,6 @@
 #!/bin/sh
-set -x
+
+# sudo mn  --custom l3.py --topo l3  --controller=none --mac
 
 GW1_MAC="00:00:00:00:01:01"
 GW1_HEX="0x0101"
