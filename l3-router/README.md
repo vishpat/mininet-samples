@@ -7,4 +7,4 @@ The above topology was created using mininet (l3-topo.py) using the following co
 sudo mn  --custom l3-topo.py --topo l3  --controller=none --mac
 </pre>
 
-The flows were insert on the OVS bridge using flows.sh 
+The flows were added to the OVS bridge using flows.sh 
