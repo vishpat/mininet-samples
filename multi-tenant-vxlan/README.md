@@ -45,7 +45,7 @@ ovs-ofctl add-flow s1 "table=0,ip,in_port=2,nw_dst=10.0.0.1/24,actions=set_field
 ovs-ofctl add-flow s1 "table=0,ip,in_port=10,tun_id=100,nw_dst=10.0.0.1,actions=output:1"
 ovs-ofctl add-flow s1 "table=0,ip,in_port=10,tun_id=100,nw_dst=10.0.0.2,actions=output:2"
 
-# ARP handling for VNI 100
+# ARP handling for VNI 200
 ovs-ofctl add-flow s1 "table=0,arp,in_port=3,nw_dst=10.0.0.4,actions=output:4"
 ovs-ofctl add-flow s1 "table=0,arp,in_port=4,nw_dst=10.0.0.3,actions=output:3"
 
