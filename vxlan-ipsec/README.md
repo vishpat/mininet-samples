@@ -31,8 +31,11 @@ ovs-vsctl add-port s1 vxlan-vm2 -- set interface vxlan-vm2 type=vxlan option:rem
 The vxlan endpoints are the dummy interface IP addresses instead of the eth0 IP addresses. At this point on the flows are added the traffic should be able to flow across different namespaces.  
 
 ## IPSec Encryption
-IPSec encryption using *static* keys can be enabled by running the ipsec\_enable.sh as follows
+IPSec encryption using *static* keys can be enabled by running the ipsec\_enable.sh on VM1 as follows
 
 <pre>
 ./ipsec_enable.sh 192.168.122.68 192.168.122.212 192.168.123.68 192.168.123.212 
 </pre>
+
+The above script will add the appropriate *ip xfrm policies and states* to encrypt the vxlan traffic. NOTE: The script requires passwordless ssh access to the VM2 from VM1.
+
