@@ -1,13 +1,13 @@
 ## Setup
 
-The setup and the openflow rules remain the same as mentioned in the multi-tenant-vxlan tutorial. The things that change are addition of of IPsec encryption for the Vxlan traffic and creation of the vxlan tunnel. The user will need to install the StrongSwan package on the mininet VM to achieve this.
+The setup and the openflow rules remain the same as mentioned in the [multi-tenant-vxlan](https://github.com/vishpat/mininet-samples/tree/master/multi-tenant-vxlan) tutorial. The things that change are creation of the vxlan tunnel and addition of IPsec encryption for the Vxlan traffic. In addition the user is also required to install [strongswan](https://www.strongswan.org) on each of the VM.
 
 ## Vxlan Tunnel
 
 In order to create an IPSec tunnel between the two VMs, we will be creating a *dummy* interface on each of the VMs and assign it an IP address. The dummy interface IP address will be used to create the Vxlan tunnels as shown below.
 
 ### VM1
-The eth0 on VM1 has the IP *192.168.122.68*
+The eth0 on VM1 has the IP *192.168.122.68* and we will be using the *192.168.123.68* as the dummy interface IP.
 
 <pre>
 ip link add ipsec-dummy type dummy
@@ -18,7 +18,7 @@ ovs-vsctl add-port s1 vxlan-vm2 -- set interface vxlan-vm2 type=vxlan option:rem
 </pre>
 
 ### VM2
-The eth0 on VM1 has the IP *192.168.122.212*
+The eth0 on VM1 has the IP *192.168.122.212* and we will be using the *192.168.123.212* as the dummy interface IP.
 
 <pre>
 ip link add ipsec-dummy type dummy
