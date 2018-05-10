@@ -12,11 +12,11 @@ Create a vxlan tunnel between the bridges running the following commands on each
 
 <pre>
 
-// VM1 (ip address : 192.168.122.88)
+// VM1 (eth0 ip address : 192.168.122.88)
 sudo ovs-vsctl add-port s1 vxlan-vm2 -- set interface vxlan-vm2 type=vxlan option:remote_ip=192.168.122.68 option:key=flow ofport_request=10
 
 
-// VM2 (ip address : 192.168.122.66)
+// VM2 (eth0 ip address : 192.168.122.66)
 sudo ovs-vsctl add-port s1 vxlan-vm1 -- set interface vxlan-vm1 type=vxlan option:remote_ip=192.168.122.88 option:key=flow ofport_request=10
 </pre>
 
